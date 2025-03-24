@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
+import Image from "next/image";
+import Button from "@/app/shared/components/button/button";
 
 const Navbar = async () => {
   const session = await auth();
@@ -15,31 +17,27 @@ const Navbar = async () => {
   };
 
   return (
-    <header className="bg-neutral-100 px-5 py-3">
-      <nav className="flex justify-between">
-        <Link className="text-violet-600" href="/public">
-          <span className="font-bold text-black">Untitled UI</span>
+    <header className="bg-white px-20 py-5">
+      <nav className="flex items-center justify-between">
+        <Link className="text-violet-600" href="/">
+          <Image src="/logo.png" alt="logo" width="110" height="20" />
         </Link>
         <div className="flex items-center gap-4 text-black">
           {session && session?.user ? (
             <>
               <Link className="link" href={`user/${session?.user?.id}`}>
+                Create
+              </Link>
+              <Link className="link" href={`user/${session?.user?.id}`}>
                 {session?.user?.name}
               </Link>
               <form action={handleSignOutGithub}>
-                <button
-                  className="cursor-pointer rounded-sm border-none bg-black px-3 py-1 text-sm text-white outline-none"
-                  type="submit"
-                >
-                  Log Out
-                </button>
+                <Button type="submit">Log Out</Button>
               </form>
             </>
           ) : (
             <form action={handleSignInGithub}>
-              <button className="link" type="submit">
-                Log In
-              </button>
+              <Button type="submit">Log In</Button>
             </form>
           )}
         </div>
